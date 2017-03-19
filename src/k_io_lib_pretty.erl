@@ -30,20 +30,11 @@
 %%% In this module "print" means the formatted printing while "write"
 %%% means just writing out onto one line.
 
--export([print/1,print/2,print/3,print/4,print/5,print/6]).
+-export([print/2,print/6]).
 
 %%%
 %%% Exported functions
 %%%
-
-%% print(Term) -> [Chars]
-%% print(Term, Column, LineLength, Depth) -> [Chars]
-%% Depth = -1 gives unlimited print depth. Use io_lib:write for atomic terms.
-
--spec print(term()) -> io_lib:chars().
-
-print(Term) ->
-    print(Term, 1, 80, -1).
 
 %% print(Term, RecDefFun) -> [Chars]
 %% print(Term, Depth, RecDefFun) -> [Chars]
@@ -86,11 +77,6 @@ print(Term, RecDefFun) ->
 
 print(Term, Depth, RecDefFun) ->
     print(Term, 1, 80, Depth, RecDefFun).
-
--spec print(term(), column(), line_length(), depth()) -> chars().
-
-print(Term, Col, Ll, D) ->
-    print(Term, Col, Ll, D, _M=-1, no_fun, latin1, true).
 
 -spec print(term(), column(), line_length(), depth(), rec_print_fun()) ->
                    chars().

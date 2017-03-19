@@ -23,7 +23,6 @@
 %% A group leader process for user io.
 
 -export([start/2, start/3, server/3]).
--export([interfaces/1]).
 
 -import(kjell_profile,[q/2]).
 
@@ -51,28 +50,6 @@ server(Drv, Shell, Options) ->
     
     start_shell(Shell),
     server_loop(Drv, get(shell), []).
-
-%% Return the pid of user_drv and the shell process.
-%% Note: We can't ask the group process for this info since it
-%% may be busy waiting for data from the driver.
-interfaces(Group) ->
-    case process_info(Group, dictionary) of
-	{dictionary,Dict} ->
-	    get_pids(Dict, [], false);
-	_ ->
-	    []
-    end.
-
-get_pids([Drv = {user_drv,_} | Rest], Found, _) ->
-    get_pids(Rest, [Drv | Found], true);
-get_pids([Sh = {shell,_} | Rest], Found, Active) ->
-    get_pids(Rest, [Sh | Found], Active);
-get_pids([_ | Rest], Found, Active) ->
-    get_pids(Rest, Found, Active);
-get_pids([], Found, true) ->
-    Found;
-get_pids([], _Found, false) ->
-    [].
 
 %% start_shell(Shell)
 %%  Spawn a shell with its group_leader from the beginning set to ourselves.

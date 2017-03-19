@@ -1,7 +1,7 @@
 %%
 %% %CopyrightBegin%
 %% 
-%% Copyright Ericsson AB 1996-2011. All Rights Reserved.
+%% Copyright Ericsson AB 1996-2013. All Rights Reserved.
 %% 
 %% The contents of this file are subject to the Erlang Public License,
 %% Version 1.1, (the "License"); you may not use this file except in
@@ -133,7 +133,7 @@ server1(Iport, Oport, Shell) ->
     	true -> ok; % skip printing information
     	_ -> %% Print some information.
     		io_request({put_chars, unicode,
-			flatten(io_lib:format("~s\n",
+			flatten(io_lib:format("~ts\n",
 					      [erlang:system_info(system_version)]))},
 	       	Iport, Oport)
 
@@ -424,7 +424,7 @@ list_commands(Iport, Oport) ->
 		  true -> 
 		      [];
 		  false ->
-		      [{put_chars,unicode,"  q        - quit erlang\n"}]
+		      [{put_chars, unicode,"  q                 - quit erlang\n"}]
 	      end,
     io_requests([{put_chars, unicode,"  c [nn]            - connect to job\n"},
 		 {put_chars, unicode,"  i [nn]            - interrupt job\n"},

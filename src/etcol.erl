@@ -9,7 +9,7 @@
 -define(ANSI_CTRL_CHARS,"\e[").
 -define(ANSI_CLEAR,"\e[0m").
 
--export([t/1,test/0]).
+-export([t/1]).
 
 -export([text_attr/2,fg_color/2,bg_color/2]).
 
@@ -75,29 +75,3 @@ bg_color(ansi,magenta) ->  "45";
 bg_color(ansi,cyan) ->  "46";
 bg_color(ansi,white) ->  "47";
 bg_color(ansi,default_bg) -> "49".
-
-% ****************************************************************
-
-test() ->
-    
-    Colors = [ black, red, green, yellow, blue, magenta, cyan, white],
-    Attrs = [ bright, dim, underscore, blink, reverse, hidden],
-    
-    AllCombos = [ {A,F,B} || A <- Attrs, F <- Colors, B <- lists:reverse(Colors) ],
-    
-    Disp = fun(AttrTuple) ->
-            {Attr,Fg,Bg} = AttrTuple,
-            {[{text_attr,Attr},
-                    {fg_color,Fg},
-                    {bg_color,Bg}], lists:concat([atom_to_list(Fg), 
-                        " on ", 
-                        atom_to_list(Bg), 
-                        " (",
-                        atom_to_list(Attr),
-                        ")", ?ANSI_CLEAR, "\n"])}
-    end,
-    
-    AllCombosAttr = lists:map(Disp,AllCombos),
-    AllCombosStr = t_a(AllCombosAttr),
-    io:format("~ts",[AllCombosStr]).
-

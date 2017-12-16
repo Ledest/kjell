@@ -3,4 +3,4 @@ otp_release:
   - R16B
 script: "make test"
 notifications:
-  email: karl@ninjacontrol.com
+  email: false
